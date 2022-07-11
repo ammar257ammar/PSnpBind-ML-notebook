@@ -1,0 +1,1 @@
+# In this folder, The trained random forest models will be stored.
