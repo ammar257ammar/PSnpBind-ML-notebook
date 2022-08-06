@@ -1,0 +1,1 @@
+# In this folder, the train/test files for the second ML approach will be stored.
