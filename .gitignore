@@ -38,11 +38,9 @@ rsconnect/
 .ipynb_checkpoints/
 
 command.txt
-main.R
-work/data-bkp/
-work/data-old/
-work/training-bkp/
-work/training/first-approach/*.csv
-work/training/second-approach/*.csv
-07-py-model-tuning.ipynb
+work/training/single-model
+work/predictions/single_model_*
 images/psd
+98_py_extra_model_tuning.ipynb
+99_py_extra_single_model_ml_modeling.ipynb
+99_R_extra_single_model_prepare_dataset.ipynb
