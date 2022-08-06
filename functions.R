@@ -340,3 +340,101 @@ splitWithCategoricalCheck <- function(results, results_col){
 		splitWithCategoricalCheck(results, results_col)
 	}
 }
+
+
+#---------------------------------------------------------------------------------------
+# Normalizing the docking result by subtracting each mutation BA from the WT BA
+#---------------------------------------------------------------------------------------
+
+normalization <-function(x){
+  
+  dimm <- dim(x)
+  
+  wt_index <- which(grepl("WT",rownames(x)))[1]
+  
+  for(i in 1:dimm[2]){
+    x[,i] <- (x[,i] - x[wt_index,i]) 
+  }
+  return(x)
+}
+
+#---------------------------------------------------------------------------------------
+# Protein dockings analysis and plotting
+#---------------------------------------------------------------------------------------
+
+analyzeProtein <- function(x, t_lower, t_upper=NULL, root="") {
+
+  #---------------------------------------------------------------------------------------
+  # Prepare dataframe of FoldX folder names and the actual mutations
+  #---------------------------------------------------------------------------------------
+  
+  data_variants <- read.delim(paste0(root,"/", x, "/pdbbind_pocket_variants_features_",x,".tsv"), header=TRUE, row.names = NULL)
+  data_variants <- data_variants[,c("FoldXname","FoldXmutation")]
+  
+  data_variants$FoldXmutation <- gsub(";", "", data_variants$FoldXmutation)
+  data_variants$FoldXmutation <- paste0(x,"_",data_variants$FoldXmutation)
+  
+  data_variants[grep("WT",data_variants$FoldXname),2] <- paste0(x,"_WT") 
+  data_variants <- data_variants %>% distinct(FoldXname, FoldXmutation)
+
+  
+  #---------------------------------------------------------------------------------------
+  # Read the dockings matrix and set the rownames to include the mutation
+  #---------------------------------------------------------------------------------------
+  
+  data_docking <- read.delim(paste0(root,"/", x,"/bindingAffinity-official-",x,"_df.tsv"), header=TRUE, row.names = 1)
+  data_docking <- data_docking[,colSums(data_docking == '-')==0]
+
+  data_docking[,ncol(data_docking)+1] <- rownames(data_docking)
+  colnames(data_docking)[ncol(data_docking)] <- "variants"
+  
+  rownames(data_docking) <- data_docking %>% left_join(data_variants, 
+                                      by=c("variants"="FoldXname")) %>%
+                            distinct(variants,FoldXmutation) %>%
+                            pull(FoldXmutation)
+  
+  data_docking <- data_docking[,-ncol(data_docking)]
+
+  colnames(data_docking) <- gsub("_ligand_similar", "", colnames(data_docking))
+  
+  
+  #---------------------------------------------------------------------------------------
+  # Filter the docking matrix using upper and lower absolute binding affinity change
+  #---------------------------------------------------------------------------------------
+  
+  vars <- normalization(data_docking)
+  
+  vars_col_to_delete <- c()
+  
+  for(i in 1:(ncol(vars)-1)){
+    
+    if(max(abs(vars[,i])) < t_lower){
+      
+      vars_col_to_delete <- c(vars_col_to_delete,i)
+      
+    }else if(max(abs(vars[,i])) >= t_lower){
+      
+      if(hasArg(t_upper)){
+        
+        if(max(abs(vars[,i])) > t_upper){
+          vars_col_to_delete <- c(vars_col_to_delete,i)
+        }
+        
+      }
+    }
+  } 
+  
+  vars <- vars[,-vars_col_to_delete]
+  
+  data_docking <- data_docking[,names(vars)]
+  
+  #---------------------------------------------------------------------------------------
+  # Plotting Boxplot
+  #---------------------------------------------------------------------------------------
+
+  box_plot <- boxplot(data_docking, cex=0.3, las=2,
+               main = paste0("Box Plot ",x), names = gsub("X", "", colnames(data_docking)))
+  points(box_plot$group, box_plot$out, type = "p", pch=20)
+  
+  return(data_docking)
+}
