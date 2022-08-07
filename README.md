@@ -30,6 +30,6 @@ After starting Jupyter lab, you can start running the code by following the numb
 
 ## Data Availability
 - PSnpBind data is available on Zenodo: [https://doi.org/10.5281/zenodo.6968470](https://doi.org/10.5281/zenodo.6968470)
-- PSnpBind-ML pretrained models are available on Zenodo: [https://doi.org/10.5281/zenodo.6968470](https://doi.org/10.5281/zenodo.6968470)
+- PSnpBind-ML pretrained models are available on Zenodo: [https://doi.org/10.5281/zenodo.6972486](https://doi.org/10.5281/zenodo.6972486)
 
 ## Citation
