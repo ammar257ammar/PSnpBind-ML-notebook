@@ -1,0 +1,7 @@
+dataset,RandomForest,DecisionTree,LassoRegression,RidgeRegression
+dual_model_pl_split_random,0.852,0.746,0.618,0.76
+dual_model_pl_split_pocket,0.868,0.772,0.654,0.77
+dual_model_pl_split_protein,0.864,0.738,0.64,0.758
+dual_model_pl_split_ligand_diversity,0.866,0.748,0.616,0.764
+dual_model_pl_split_ligand_weight,0.854,0.716,0.616,0.758
+dual_model_pl_split_ligand_volume,0.848,0.712,0.62,0.762

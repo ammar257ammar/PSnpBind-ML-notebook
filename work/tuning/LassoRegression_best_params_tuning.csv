@@ -1,0 +1,2 @@
+param,dual_model_pl_split_random,dual_model_pl_split_pocket,dual_model_pl_split_protein,dual_model_pl_split_ligand_diversity,dual_model_pl_split_ligand_weight,dual_model_pl_split_ligand_volume
+alpha,0.01,0.01,0.01,0.01,0.01,0.01

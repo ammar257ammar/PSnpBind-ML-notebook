@@ -1,0 +1,5 @@
+param,dual_model_pl_split_random,dual_model_pl_split_pocket,dual_model_pl_split_protein,dual_model_pl_split_ligand_diversity,dual_model_pl_split_ligand_weight,dual_model_pl_split_ligand_volume
+max_depth,None,None,None,None,None,None
+max_features,62.0,auto,62.0,62.0,62.0,62.0
+min_samples_leaf,10.0,10,10.0,10.0,10.0,10.0
+min_samples_split,2.0,2,5.0,2.0,10.0,10.0
