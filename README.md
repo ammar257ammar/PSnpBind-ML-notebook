@@ -34,3 +34,4 @@ After starting Jupyter lab, you can start running the code by following the numb
 - PSnpBind-ML pretrained models are available on Zenodo: [https://doi.org/10.5281/zenodo.6972486](https://doi.org/10.5281/zenodo.6972486)
 
 ## Citation
+Ammar, A., Cavill, R., Evelo, C. et al. PSnpBind-ML: predicting the effect of binding site mutations on protein-ligand binding affinity. J Cheminform 15, 31 (2023). [https://doi.org/10.1186/s13321-023-00701-3](https://doi.org/10.1186/s13321-023-00701-3)
